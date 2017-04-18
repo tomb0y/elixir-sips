@@ -1,6 +1,8 @@
 defmodule Schizo do
   @moduledoc false
 
+  require Integer
+
   @doc ~S"""
   Upcases every other word in a sentece.
 
@@ -41,18 +43,10 @@ defmodule Schizo do
     |> Enum.map(transform_odd_index_item_with(transformer))
   end
 
-  defmacrop is_even(int) do
-    quote do: rem(unquote(int), 2) == 0
-  end
-
-  defmacrop is_odd(int) do
-    quote do: rem(unquote(int), 2) == 1
-  end
-
   defp transform_odd_index_item_with(transformer) do
     fn
-      ({item, index}) when is_even(index) -> item
-      ({item, index}) when is_odd(index) -> transformer.(item)
+      ({item, index}) when Integer.is_even(index) -> item
+      ({item, index}) when Integer.is_odd(index) -> transformer.(item)
     end
   end
 end
