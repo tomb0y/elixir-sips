@@ -3,6 +3,8 @@ defmodule Schizo do
 
   require Integer
 
+  @vowels ~w[a i u e o]
+
   @doc ~S"""
   Upcases every other word in a sentece.
 
@@ -13,7 +15,8 @@ defmodule Schizo do
 
   """
   def uppercase(str) do
-    str |> transform_every_other_word_with(&String.upcase/1)
+    str
+    |> transform_every_other_word_with(&String.upcase/1)
   end
 
   @doc ~S"""
@@ -26,8 +29,8 @@ defmodule Schizo do
 
   """
   def unvowel(str) do
-    str |> transform_every_other_word_with(fn item ->
-      String.replace(item, ~r/[aiueo]/, "") end)
+    str
+    |> transform_every_other_word_with(&(String.replace(&1, @vowels, "")))
   end
 
   defp transform_every_other_word_with(str, transformer) do
